@@ -1,7 +1,8 @@
 import { Container, Heading, } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { HeadAdmin } from "@/components/HeadAdmin";
-import { TableUser } from "@/components/table/TableUser";
+import { TableCall } from "@/components/table/TableCall";
+
 
 export default function User() {
   const router = useRouter();
@@ -11,8 +12,8 @@ export default function User() {
       <main>
         
         <Container maxW="80%">          
-          <Heading  marginBottom="8" marginTop="8">Users</Heading>
-          <TableUser/>
+          <Heading  marginBottom="8" marginTop="8">Calls</Heading>
+          <TableCall/>
         </Container>
       </main>
     </>

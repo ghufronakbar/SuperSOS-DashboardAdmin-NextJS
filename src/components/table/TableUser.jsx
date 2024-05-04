@@ -22,15 +22,7 @@ import { useRouter } from "next/router";
 export function TableUser() {
   const router = useRouter();
   const toast = useToast();
-  function formatDate(dateString) {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  }
+ 
 
   let i = 1;
   const { data: dataUser, refetch: refetchDataUser } = useQuery({
