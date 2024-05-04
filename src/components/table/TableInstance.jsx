@@ -24,7 +24,7 @@ export function TableInstance() {
   const toast = useToast();
 
   let i = 1;
-  const { data: dataUser, refetch: refetchDataUser } = useQuery({
+  const { data: dataInstance, refetch: refetchDataInstance } = useQuery({
     queryKey: ["instances"],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/instances");
@@ -48,14 +48,15 @@ export function TableInstance() {
               <Th>Name</Th>
               <Th>Contact</Th>
               <Th>Address</Th>
+              <Th>Type</Th>
               <Th>Call Answered</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
-            {dataUser?.data.values.map((item) => (
-              <Tr key={item.id_user}>
+            {dataInstance?.data.values.map((item) => (
+              <Tr key={item.id_instances}>
                 <Td>{i++}</Td>
 
                 <Td>
@@ -69,6 +70,15 @@ export function TableInstance() {
                 <Td>
                   <Text>{item.address}</Text>
                 </Td>
+                <Td>
+                    <Text as='b'>
+                      {item.instances_type == 1
+                        ? "Rumah Sakit"
+                        : item.instances_type == 2
+                        ? "Polisi"
+                        : "Pemadam Kebakaran"}
+                    </Text>
+                  </Td>
                 <Td isNumeric>
                   <Center>
                     <Text as="abbr">{item.calls.length}</Text>
