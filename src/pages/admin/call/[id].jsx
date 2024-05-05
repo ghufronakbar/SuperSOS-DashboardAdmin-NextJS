@@ -5,7 +5,7 @@ import { DetailCall } from "@/components/detail/DetailCall";
 
 
 
-export default function InstanceID() {
+export default function CallID() {
   return (
     <>
       <HeadAdmin/>
