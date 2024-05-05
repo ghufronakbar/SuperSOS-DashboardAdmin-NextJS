@@ -6,6 +6,7 @@ import {
   Button,
   Select,
   UnorderedList,
+  Text,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
@@ -119,6 +120,22 @@ export function NavbarAdmin() {
                     ))}
                   </Select>
                 </Box>
+              </List>
+              <List>
+              <Box
+                as="button"
+                p={2}
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+                mr={8}
+                flex={2}
+                onClick={() => {
+                  handleLogout()
+                }}
+              >
+                <Text as="b">Logout</Text>
+              </Box>
               </List>
             </UnorderedList>
           </Nav>

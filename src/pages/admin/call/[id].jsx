@@ -3,10 +3,9 @@ import { Container } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { DetailCall } from "@/components/detail/DetailCall";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-
-
-export default function CallID() {
+function CallID() {
   return (
     <>
       <HeadAdmin/>
@@ -17,3 +16,6 @@ export default function CallID() {
     </>
   );
 }
+
+
+export default withAuth(CallID)

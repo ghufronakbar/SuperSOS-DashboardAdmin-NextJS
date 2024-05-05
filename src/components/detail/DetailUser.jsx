@@ -41,6 +41,10 @@ import {
         fetchData();
       }
     }, [id_user]);
+
+    const handleDetailCall = (id_call) => {
+      router.push(`/admin/call/${id_call}`);
+    };
   
     function formatDate(dateString) {
       const options = {
@@ -147,6 +151,7 @@ import {
                                     m={2}
                                     px={4}
                                     key={index}
+                                    onClick={()=>{handleDetailCall(call.id_call)}}
                                   >
                                     <VStack>
                                       <Text>{formatDate(call.applied_at)}</Text>

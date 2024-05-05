@@ -2,8 +2,9 @@ import { Container, Heading } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { TableUser } from "@/components/table/TableUser";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-export default function User() {
+function User() {
   return (
     <>
       <HeadAdmin />
@@ -19,3 +20,5 @@ export default function User() {
     </>
   );
 }
+
+export default withAuth(User)

@@ -2,9 +2,9 @@ import { Container, Heading, } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { TableInstancePending } from "@/components/table/TableInstancePending";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-
-export default function InstancePending() {
+function InstancePending() {
   return (
     <>
       <HeadAdmin/>
@@ -18,3 +18,5 @@ export default function InstancePending() {
     </>
   );
 }
+
+export default withAuth(InstancePending)

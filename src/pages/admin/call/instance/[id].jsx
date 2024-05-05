@@ -1,21 +1,21 @@
-
 import { Container, Heading } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { TableCallInstance } from "@/components/table/TableCallInstance";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-
-
-export default function CallInstanceID() {
+function CallInstanceID() {
   return (
     <>
-      <HeadAdmin/>
-      <NavbarAdmin/>
-      <main>        
+      <HeadAdmin />
+      <NavbarAdmin />
+      <main>
         <Container maxW="80%">
-        
-          <TableCallInstance/></Container>
+          <TableCallInstance />
+        </Container>
       </main>
     </>
   );
 }
+
+export default withAuth(CallInstanceID);

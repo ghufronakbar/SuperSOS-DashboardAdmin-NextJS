@@ -3,8 +3,9 @@ import { Container } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { DetailUser } from "@/components/detail/DetailUser";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-export default function WargaID() {
+function UserID() {
   return (
     <>
       <HeadAdmin/>
@@ -15,3 +16,5 @@ export default function WargaID() {
     </>
   );
 }
+
+export default withAuth(UserID)

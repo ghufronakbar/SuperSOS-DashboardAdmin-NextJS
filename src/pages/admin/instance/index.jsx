@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { TableInstance } from "@/components/table/TableInstance";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
-export default function Instance() {
+function Instance() {
   return (
     <>
       <HeadAdmin />
@@ -20,3 +21,5 @@ export default function Instance() {
     </>
   );
 }
+
+export default withAuth(Instance)

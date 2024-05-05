@@ -3,11 +3,11 @@ import { Container, Heading } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
 import { TableCallType } from "@/components/table/TableCallType";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
+import { withAuth } from "@/lib/authorization";
 
 
 
-
-export default function CallInstanceID() {
+ function CallTypeID() {
   return (
     <>
       <HeadAdmin/>
@@ -20,3 +20,5 @@ export default function CallInstanceID() {
     </>
   );
 }
+
+export default withAuth(CallTypeID)
