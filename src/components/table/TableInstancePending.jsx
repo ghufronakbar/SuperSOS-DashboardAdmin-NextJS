@@ -1,11 +1,7 @@
 import {
   Box,
   Button,
-  Center,
   Flex,
-  FormControl,
-  Image,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,

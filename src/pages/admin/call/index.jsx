@@ -5,7 +5,7 @@ import { TableCall } from "@/components/table/TableCall";
 import { NavbarAdmin } from "@/components/NavbarAdmin";
 
 
-export default function User() {
+export default function Call() {
   const router = useRouter();
   return (
     <>
