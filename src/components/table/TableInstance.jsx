@@ -33,6 +33,36 @@ export function TableInstance() {
     router.push(`/admin/instance/${id_instance}`);
   };
 
+  const handleSuspend = async (id_instance) => {
+    try {
+      await axiosInstance.put(`/instance/suspend/${id_instance}`, {
+        id_user: id_instance,
+      });
+      toast({
+        title: "Instansi ini telah ditangguhkan",
+        status: "warning",
+      });
+      refetchDataInstance();
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+    }
+  };
+
+  const handleActive = async (id_instance) => {
+    try {
+      await axiosInstance.put(`/instance/approve/${id_instance}`, {
+        id_user: id_instance,
+      });
+      toast({
+        title: "Instansi ini telah diaktifkan kembali",
+        status: "info",
+      });
+      refetchDataInstance();
+    } catch (error) {
+      console.error("Error rejecting request:", error);
+    }
+  };
+
   return (
     <>
       <TableContainer>
@@ -64,7 +94,7 @@ export function TableInstance() {
                   <Text>{item.address}</Text>
                 </Td>
                 <Td>
-                  <Text as='b'>
+                  <Text as="b">
                     {item.instances_type == 1
                       ? "Rumah Sakit"
                       : item.instances_type == 2
@@ -79,16 +109,35 @@ export function TableInstance() {
                 </Td>
                 <Td>
                   <Center>
-                    <Box
-                      as="button"
-                      borderRadius="md"
-                      bg="#48BB78"
-                      color="white"
-                      px={4}
-                      h={8}
-                    >
-                      Aktif
-                    </Box>
+                    {item.status == 1 ? (
+                      <Box
+                        as="button"
+                        borderRadius="md"
+                        bg="#48BB78"
+                        color="white"
+                        px={4}
+                        h={8}
+                        onClick={() => {
+                          handleSuspend(item.id_instances);
+                        }}
+                      >
+                        Aktif
+                      </Box>
+                    ) : item.status == 2 ? (
+                      <Box
+                        as="button"
+                        borderRadius="md"
+                        bg="red"
+                        color="white"
+                        px={4}
+                        h={8}
+                        onClick={() => {
+                          handleActive(item.id_instances);
+                        }}
+                      >
+                        Ditangguhkan
+                      </Box>
+                    ) : null}
                   </Center>
                 </Td>
                 <Td>

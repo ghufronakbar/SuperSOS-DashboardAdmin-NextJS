@@ -74,7 +74,7 @@ export function TableCall() {
                       borderRadius="18"
                       boxSize="60px"
                       objectFit="cover"
-                      src={process.env.NEXT_PUBLIC_BASE_URL + '/images/profile/' + item.picture}
+                      src={user.picture}
                       alt={user.picture}
                     />
                   ))}
