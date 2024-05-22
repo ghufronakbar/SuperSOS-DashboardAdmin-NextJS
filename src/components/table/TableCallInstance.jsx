@@ -1,11 +1,11 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
-  Flex,
   Heading,
   Image,
-  Spacer,
   Table,
   TableContainer,
   Tbody,
@@ -20,6 +20,7 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import React from "react";
 
 
 export function TableCallInstance() {
@@ -34,7 +35,7 @@ export function TableCallInstance() {
       month: "long",
       year: "numeric",
     };
-    return new Date(dateString).toLocaleDateString("en-US", options);
+    return new Date(dateString).toLocaleDateString("id-ID", options);
   }
 
   let i = 1;
@@ -47,7 +48,7 @@ export function TableCallInstance() {
   });
 
   const { data: dataInstance, refetch: refetchDataInstance } = useQuery({
-    queryKey: ["instance",id_instances],
+    queryKey: ["instance", id_instances],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get(`/instance/${id_instances}`);
       return dataResponse;
@@ -60,19 +61,19 @@ export function TableCallInstance() {
 
   return (
     <>
-     {dataInstance?.data.values.map((item) => (
-    <Heading marginBottom="8" marginTop="8">Calls {item.instances_name}</Heading>
-     ))}
+      {dataInstance?.data.values.map((item) => (
+        <Heading marginBottom="8" marginTop="8">Panggilan {item.instances_name}</Heading>
+      ))}
       <TableContainer>
         <Table>
           <Thead>
             <Tr>
               <Th>No</Th>
               <Th></Th>
-              <Th>Name</Th>
-              <Th>Location</Th>
-              <Th>Type</Th>
-              <Th>Applied At</Th>              
+              <Th>Nama</Th>
+              <Th>Lokasi</Th>
+              <Th>Jenis</Th>
+              <Th>Diajukan Pada</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
@@ -83,21 +84,20 @@ export function TableCallInstance() {
                 <Td>{i++}</Td>
                 <Td>
                   {item.user.map((user, index) => (
-                    <>
-                      <Image
-                        borderRadius="18"
-                        boxSize="60px"
-                        objectFit="cover"
-                        src={user.picture}
-                        alt={user.picture}
-                      />
-                    </>
+                    <Image
+                      key={index}
+                      borderRadius="18"
+                      boxSize="60px"
+                      objectFit="cover"
+                      src={process.env.NEXT_PUBLIC_BASE_URL + '/images/profile/' + item.picture}
+                      alt={user.picture}
+                    />
                   ))}
                 </Td>
                 <Td>
                   <Text as="b">
-                    {item.user.map((user) => (
-                      <>{user.fullname}</>
+                    {item.user.map((user, index) => (
+                      <React.Fragment key={index}>{user.fullname}</React.Fragment>
                     ))}
                   </Text>
                 </Td>
@@ -105,7 +105,6 @@ export function TableCallInstance() {
                   <Text>{item.latitude}</Text>
                   <Text>{item.longitude}</Text>
                 </Td>
-
                 <Td>
                   <Text as="b">
                     {item.type == 1
@@ -118,7 +117,6 @@ export function TableCallInstance() {
                 <Td>
                   <Text>{formatDate(item.applied_at)}</Text>
                 </Td>
-          
                 <Td>
                   <Center>
                     <Box
@@ -137,22 +135,20 @@ export function TableCallInstance() {
                       px={4}
                     >
                       <VStack>
-                       
                         <Text as="b">
                           {item.status === 0
-                            ? "Pending"
+                            ? "Menunggu"
                             : item.status === 1
-                            ? "Cancelled"
-                            : "Accepted"}
+                            ? "Dibatalkan"
+                            : "Diterima"}
                         </Text>
                         {item.status === 0 ? (
                           ""
                         ) : item.status == 1 ? (
-                          <Text>Cancelled By User</Text>
+                          <Text>Dibatalkan Oleh Pengguna</Text>
                         ) : (
                           <Text>{formatDate(item.answered_at)}</Text>
                         )}
-
                       </VStack>
                     </Box>
                   </Center>
@@ -171,7 +167,13 @@ export function TableCallInstance() {
               </Tr>
             ))}
           </Tbody>
-        </Table>
+        </Table>        
+        {dataCall?.data.values.length == 0 ? (
+              <Alert status="info">
+                <AlertIcon />
+                Tidak ada data
+              </Alert>
+            ) : null }
       </TableContainer>
     </>
   );

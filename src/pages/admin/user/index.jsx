@@ -12,7 +12,7 @@ function User() {
       <main>
         <Container maxW="80%">
           <Heading marginBottom="8" marginTop="8">
-            Users
+            Pengguna
           </Heading>
           <TableUser />
         </Container>

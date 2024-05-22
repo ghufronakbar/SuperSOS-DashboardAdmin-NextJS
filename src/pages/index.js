@@ -7,9 +7,7 @@ import Call from "./admin/call";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return (
-  
-     
+  return (       
      <Call/>
   );
 }

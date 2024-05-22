@@ -2,9 +2,6 @@ import {
   Box,
   Button,
   Center,
-  Flex,
-  Image,
-  Spacer,
   Table,
   TableContainer,
   Tbody,
@@ -32,7 +29,6 @@ export function TableInstance() {
     },
   });
 
-
   const handleDetail = (id_instance) => {
     router.push(`/admin/instance/${id_instance}`);
   };
@@ -44,12 +40,11 @@ export function TableInstance() {
           <Thead>
             <Tr>
               <Th>No</Th>
-
-              <Th>Name</Th>
-              <Th>Contact</Th>
-              <Th>Address</Th>
-              <Th>Type</Th>
-              <Th>Call Answered</Th>
+              <Th>Nama</Th>
+              <Th>Kontak</Th>
+              <Th>Alamat</Th>
+              <Th>Jenis</Th>
+              <Th>Panggilan Dijawab</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
@@ -58,7 +53,6 @@ export function TableInstance() {
             {dataInstance?.data.values.map((item) => (
               <Tr key={item.id_instances}>
                 <Td>{i++}</Td>
-
                 <Td>
                   <Text as="b">{item.instances_name}</Text>
                 </Td>
@@ -66,19 +60,18 @@ export function TableInstance() {
                   <Text as="b">{item.email}</Text>
                   <Text>{item.phone}</Text>
                 </Td>
-
                 <Td>
                   <Text>{item.address}</Text>
                 </Td>
                 <Td>
-                    <Text as='b'>
-                      {item.instances_type == 1
-                        ? "Rumah Sakit"
-                        : item.instances_type == 2
-                        ? "Polisi"
-                        : "Pemadam Kebakaran"}
-                    </Text>
-                  </Td>
+                  <Text as='b'>
+                    {item.instances_type == 1
+                      ? "Rumah Sakit"
+                      : item.instances_type == 2
+                      ? "Polisi"
+                      : "Pemadam Kebakaran"}
+                  </Text>
+                </Td>
                 <Td isNumeric>
                   <Center>
                     <Text as="abbr">{item.calls.length}</Text>
@@ -94,7 +87,7 @@ export function TableInstance() {
                       px={4}
                       h={8}
                     >
-                      Activated
+                      Aktif
                     </Box>
                   </Center>
                 </Td>

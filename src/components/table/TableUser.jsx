@@ -22,11 +22,10 @@ import { useRouter } from "next/router";
 export function TableUser() {
   const router = useRouter();
   const toast = useToast();
- 
 
   let i = 1;
   const { data: dataUser, refetch: refetchDataUser } = useQuery({
-    queryKey:['users'],
+    queryKey: ['users'],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/users");
       return dataResponse;
@@ -40,7 +39,7 @@ export function TableUser() {
         id_user,
       });
       toast({
-        title: "This user has been suspended",
+        title: "Pengguna ini telah ditangguhkan",
         status: "warning",
       });
       refetchDataUser();
@@ -56,7 +55,7 @@ export function TableUser() {
         id_user,
       });
       toast({
-        title: "This user has been activated",
+        title: "Pengguna ini telah diaktifkan",
         status: "success",
       });
       refetchDataUser();
@@ -71,17 +70,15 @@ export function TableUser() {
 
   return (
     <>
-      
-      
       <TableContainer>
         <Table>
           <Thead>
             <Tr>
               <Th>No</Th>
               <Th></Th>
-              <Th>Name</Th>
-              <Th>Contact</Th>
-              <Th>Address</Th>
+              <Th>Nama</Th>
+              <Th>Kontak</Th>
+              <Th>Alamat</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
@@ -95,7 +92,7 @@ export function TableUser() {
                     borderRadius="18"
                     boxSize="60px"
                     objectFit="cover"
-                    src={item.picture}
+                    src={process.env.NEXT_PUBLIC_BASE_URL + '/images/profile/' + item.picture}
                     alt={item.picture}
                   />
                 </Td>
@@ -106,7 +103,6 @@ export function TableUser() {
                   <Text as="b">{item.email}</Text>
                   <Text>{item.phone}</Text>
                 </Td>
-
                 <Td>
                   <Text>{item.address}</Text>
                 </Td>
@@ -124,7 +120,7 @@ export function TableUser() {
                           handleSuspend(item.id_user);
                         }}
                       >
-                        Activated
+                        Aktif
                       </Box>
                     ) : (
                       <Box
@@ -138,7 +134,7 @@ export function TableUser() {
                           handleActivated(item.id_user);
                         }}
                       >
-                        Suspended
+                        Ditangguhkan
                       </Box>
                     )}
                   </Center>
@@ -152,7 +148,7 @@ export function TableUser() {
                     >
                       <Text as="b">Detail</Text>
                     </Button>
-                  </Center>                  
+                  </Center>
                 </Td>
               </Tr>
             ))}

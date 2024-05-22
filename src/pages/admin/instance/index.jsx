@@ -13,7 +13,7 @@ function Instance() {
       <main>
         <Container maxW="80%">
           <Heading marginBottom="8" marginTop="8">
-            Instances
+            Instansi
           </Heading>
           <TableInstance />
         </Container>

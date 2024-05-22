@@ -1,4 +1,6 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Flex,
@@ -48,7 +50,7 @@ export function TableInstancePending() {
         id_instances,
       });
       toast({
-        title: "This instance has been activated",
+        title: "Instansi ini telah diaktifkan",
         status: "success",
       });
       refetchDataInstancePending();
@@ -64,7 +66,7 @@ export function TableInstancePending() {
         id_instances,
       });
       toast({
-        title: "This instance has been deleted",
+        title: "Instansi ini telah dihapus",
         status: "warning",
       });
       refetchDataInstancePending();
@@ -80,24 +82,21 @@ export function TableInstancePending() {
           <Thead>
             <Tr>
               <Th>No</Th>
-              <Th>Name</Th>
-              <Th>Contact</Th>
-              <Th>Address</Th>
-              <Th>Type</Th>
+              <Th>Nama</Th>
+              <Th>Kontak</Th>
+              <Th>Alamat</Th>
+              <Th>Jenis</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
             {dataInstancePending?.data.values.length === 0 ? (
-              <Text textAlign="center" colSpan="6">
-                Tidak Ada Data
-              </Text>
+              <></>
             ) : (
               dataInstancePending?.data.values.map((item) => (
                 <Tr key={item.id_instances}>
                   <Td>{i++}</Td>
-
                   <Td>
                     <Text as="b">{item.instances_name}</Text>
                   </Td>
@@ -105,13 +104,11 @@ export function TableInstancePending() {
                     <Text as="b">{item.email}</Text>
                     <Text>{item.phone}</Text>
                   </Td>
-
                   <Td>
                     <Text>{item.address}</Text>
                   </Td>
-
                   <Td>
-                    <Text as='b'>
+                    <Text as="b">
                       {item.type == 1
                         ? "Rumah Sakit"
                         : item.type == 2
@@ -119,7 +116,6 @@ export function TableInstancePending() {
                         : "Pemadam Kebakaran"}
                     </Text>
                   </Td>
-
                   <Td>
                     <Box
                       as="button"
@@ -148,7 +144,7 @@ export function TableInstancePending() {
                         handleDelete(item.id_instances);
                       }}
                     >
-                      Delete Request
+                      Hapus Permintaan
                     </Box>
                   </Td>
                 </Tr>
@@ -156,16 +152,21 @@ export function TableInstancePending() {
             )}
           </Tbody>
         </Table>
+        {dataInstancePending?.data.values.length === 0 ? (
+          <Alert status="info">
+            <AlertIcon />
+            Tidak ada data
+          </Alert>
+        ) : null}
       </TableContainer>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Approve Instance?</ModalHeader>
+          <ModalHeader>Setujui Instansi?</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Flex>
               <Spacer />
-
               <Button
                 mt={8}
                 borderRadius="md"
@@ -178,7 +179,7 @@ export function TableInstancePending() {
                   setIsModalOpen(false);
                 }}
               >
-                Cancel
+                Batal
               </Button>
               <Spacer />
               <Button
@@ -192,9 +193,8 @@ export function TableInstancePending() {
                   handleApproveInstance(idInstances);
                 }}
               >
-                Accept
+                Terima
               </Button>
-
               <Spacer />
             </Flex>
           </ModalBody>

@@ -11,7 +11,7 @@ function InstancePending() {
       <NavbarAdmin/>
       <main>        
         <Container maxW="80%">          
-          <Heading  marginBottom="8" marginTop="8">Request Instances</Heading>
+          <Heading  marginBottom="8" marginTop="8">Permintaan Pendaftaran Instansi</Heading>
           <TableInstancePending/>
         </Container>
       </main>

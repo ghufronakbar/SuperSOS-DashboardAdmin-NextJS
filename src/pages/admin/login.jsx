@@ -12,12 +12,14 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { HeadAdmin } from "@/components/HeadAdmin";
+import { useRouter } from "next/router";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const toast = useToast();
+  const router = useRouter()
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,18 +40,18 @@ function Login() {
           status: "success",
         });
 
-        window.location.href = "/admin/call/instance";
+        router.push("/admin/instance")
       } else {
         console.log(response)
         setError(message);
         toast({
-          title: "Email or Password doesn't match",
+          title: "Email dan password tidak cocok",
           status: "error",
         });
       }
     } catch (error) {
       console.error("Error logging in:", error.message);
-      setError("Failed to login. Please try again.");
+      setError("Kesalahan teerjadi saat login");
     }
   };
 

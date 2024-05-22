@@ -1,17 +1,7 @@
-import {
-  Flex,
-  Spacer,
-  Box,
-  Link as ChakraLink,
-  Button,
-  Select,
-  UnorderedList,
-  Text,
-} from "@chakra-ui/react";
+import { Flex, Spacer, Box, Button, Select, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { List, Nav } from "reactstrap";
 import { axiosInstance } from "../lib/axios";
 
 export function NavbarAdmin() {
@@ -45,102 +35,76 @@ export function NavbarAdmin() {
 
   return (
     <Flex p={1} bg="#4FD1C5" color="white" padding="3">
-      <Box>
-        <Button colorScheme="white" variant="ghost">
-          SUPERSOS ADMIN
-        </Button>
-      </Box>
+      <Button colorScheme="white" variant="ghost" mr={4}>
+        SUPERSOS ADMIN
+      </Button>
       <Spacer />
-      <Box>
-        <Box>
-          <Nav horizontal>
-            <UnorderedList
-              style={{
-                display: "flex",
-                listStyleType: "none",
-                gap: "20px",
-                margin: 0,
-                padding: 0,
-              }}
-            >
-              <List>
-                <ChakraLink href="/admin/instance">
-                  <Button colorScheme="white" variant="ghost">
-                    Instance
-                  </Button>
-                </ChakraLink>
-              </List>
-              <List>
-                <ChakraLink href="/admin/instance/pending">
-                  <Button colorScheme="white" variant="ghost">
-                    Request Instance
-                  </Button>
-                </ChakraLink>
-              </List>
-              <List>
-                <ChakraLink href="/admin/user">
-                  <Button colorScheme="white" variant="ghost">
-                    User
-                  </Button>
-                </ChakraLink>
-              </List>
-              <List>
-                <Box>
-                  <Select
-                    placeholder="Call"
-                    onChange={handleSelectChange}
-                    color={"white"}
-                    variant="fill"
-                  >
-                    {" "}
-                    <option value="/admin/call"> All Calls</option>
-                    <option value="/admin/call/type/1">Call Rumah Sakit</option>
-                    <option value="/admin/call/type/2">Call Polisi</option>
-                    <option value="/admin/call/type/3">
-                      Call Pemadam Kebakaran
-                    </option>
-                  </Select>
-                </Box>
-              </List>
-              <List>
-                <Box>
-                  <Select
-                    placeholder="Call"
-                    onChange={handleSelectChange}
-                    color={"white"}
-                    variant="fill"
-                  >
-                    {item?.map((item) => (
-                      <option
-                        key={item.id_instances}
-                        value={`/admin/call/instance/${item.id_instances}`}
-                      >
-                        {item.instances_name}
-                      </option>
-                    ))}
-                  </Select>
-                </Box>
-              </List>
-              <List>
-              <Box
-                as="button"
-                p={2}
-                borderWidth="1px"
-                borderRadius="lg"
-                overflow="hidden"
-                mr={8}
-                flex={2}
-                onClick={() => {
-                  handleLogout()
-                }}
-              >
-                <Text as="b">Logout</Text>
-              </Box>
-              </List>
-            </UnorderedList>
-          </Nav>
+      <Flex alignItems="center">
+        <Box mr={4}>
+          <Button
+            colorScheme="white"
+            variant="ghost"
+            onClick={() => router.push(`/admin/instance`)}
+          >
+            Instansi
+          </Button>
         </Box>
-      </Box>
+        <Box mr={4}>
+          <Button
+            colorScheme="white"
+            variant="ghost"
+            onClick={() => router.push(`/admin/instance/pending`)}
+          >
+            Permintaan Pendaftaran Instansi
+          </Button>
+        </Box>
+        <Box mr={4}>
+          <Button
+            colorScheme="white"
+            variant="ghost"
+            onClick={() => router.push(`/admin/user`)}
+          >
+            Pengguna
+          </Button>
+        </Box>
+        <Box mr={4}>
+          <Select
+            placeholder="Tipe Panggilan Darurat"
+            onChange={handleSelectChange}
+            variant="filled"
+            color="teal"
+          >
+            <option value="/admin/call">Semua Panggilan Darurat</option>
+            <option value="/admin/call/type/1">
+              Panggilan Darurat Rumah Sakit
+            </option>
+            <option value="/admin/call/type/2">Panggilan Darurat Polisi</option>
+            <option value="/admin/call/type/3">
+              Panggilan Darurat Pemadam Kebakaran
+            </option>
+          </Select>
+        </Box>
+        <Box mr={4}>
+          <Select
+            placeholder="Panggilan Darurat oleh Instansi"
+            onChange={handleSelectChange}
+            variant="filled"
+            color="teal"
+          >
+            {item?.map((item) => (
+              <option
+                key={item.id_instances}
+                value={`/admin/call/instance/${item.id_instances}`}
+              >
+                {item.instances_name}
+              </option>
+            ))}
+          </Select>
+        </Box>
+        <Button colorScheme="white" variant="ghost" onClick={handleLogout}>
+          <Text as="b">Keluar</Text>
+        </Button>
+      </Flex>
     </Flex>
   );
 }

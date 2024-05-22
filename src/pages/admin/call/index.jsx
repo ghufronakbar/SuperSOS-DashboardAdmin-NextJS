@@ -13,7 +13,7 @@ function Call() {
       <main>
         <Container maxW="80%">
           <Heading marginBottom="8" marginTop="8">
-            Calls
+            Panggilan Darurat
           </Heading>
           <TableCall />
         </Container>

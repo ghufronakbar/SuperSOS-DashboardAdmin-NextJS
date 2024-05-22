@@ -49,11 +49,11 @@ export function DetailCall() {
       month: "long",
       year: "numeric",
     };
-    return new Date(dateString).toLocaleDateString("en-US", options);
+    return new Date(dateString).toLocaleDateString("id-ID", options);
   }
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching data</div>;
+  if (loading) return <div>Memuat...</div>;
+  if (error) return <div>Terjadi kesalahan saat mengambil data</div>;
 
   return (
     <>
@@ -92,7 +92,7 @@ export function DetailCall() {
                           {item.user.map((user) => (
                             <Tbody>
                               <Tr>
-                                <Th>Name</Th>
+                                <Th>Nama</Th>
                                 <Td>{user.fullname}</Td>
                               </Tr>
                               <Tr>
@@ -100,16 +100,16 @@ export function DetailCall() {
                                 <Td>{user.email}</Td>
                               </Tr>
                               <Tr>
-                                <Th>Phone</Th>
+                                <Th>Telepon</Th>
                                 <Td>{user.phone}</Td>
                               </Tr>
                               <Tr>
-                                <Th>Address</Th>
+                                <Th>Alamat</Th>
                                 <Td>{user.address}</Td>
                               </Tr>
 
                               <Tr>
-                                <Th>Applied At</Th>
+                                <Th>Diajukan Pada</Th>
                                 <Td>
                                   <Text>{formatDate(item.applied_at)}</Text>
                                 </Td>
@@ -135,7 +135,7 @@ export function DetailCall() {
                             item.instances.map((instance) => (
                               <Tbody key={instance.id}>
                                 <Tr>
-                                  <Th>Name</Th>
+                                  <Th>Nama</Th>
                                   <Td>{instance.instances_name}</Td>
                                 </Tr>
                                 <Tr>
@@ -143,15 +143,15 @@ export function DetailCall() {
                                   <Td>{instance.email}</Td>
                                 </Tr>
                                 <Tr>
-                                  <Th>Phone</Th>
+                                  <Th>Telepon</Th>
                                   <Td>{instance.phone}</Td>
                                 </Tr>
                                 <Tr>
-                                  <Th>Address</Th>
+                                  <Th>Alamat</Th>
                                   <Td>{instance.address}</Td>
                                 </Tr>
                                 <Tr>
-                                  <Th>Answered At</Th>
+                                  <Th>Dijawab Pada</Th>
                                   <Td>{formatDate(item.answered_at)}</Td>
                                 </Tr>
                               </Tbody>
@@ -169,7 +169,7 @@ export function DetailCall() {
                                     m={2}
                                     px={4}
                                   >
-                                    Hasn't Answered
+                                    Belum Dijawab
                                   </Box>
                                 </Td>
                               </Tr>
@@ -195,13 +195,13 @@ export function DetailCall() {
                         <Tbody>
                         
                           <Tr>
-                            <Th>LOCATION</Th>
+                            <Th>Lokasi</Th>
                             <Td isNumeric>
                               {item.latitude}, {item.longitude}
                             </Td>
                           </Tr>
                           <Tr>
-                            <Th>Type</Th>
+                            <Th>Tipe</Th>
 
                             <Td isNumeric>
                               {item.type == 1
@@ -236,8 +236,8 @@ export function DetailCall() {
                                     {item.status === 0
                                       ? "Pending"
                                       : item.status === 1
-                                      ? "Cancelled by user"
-                                      : "Accepted"}
+                                      ? "Dibatalkan oleh pengguna"
+                                      : "Diterima"}
                                   </Text>
                                 </VStack>
                               </Box>
@@ -257,7 +257,7 @@ export function DetailCall() {
                       overflow="hidden"
                       
                     >
-                      <Table mb={4}><Th as='b'>Message</Th></Table>
+                      <Table mb={4}><Th as='b'>Pesan</Th></Table>
                       <Text px={4} style={{ overflowWrap: "break-word" }}>
                         {item.message}
                       </Text>

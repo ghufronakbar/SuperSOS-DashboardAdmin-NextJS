@@ -1,11 +1,11 @@
 import {
+  Alert,
+  AlertIcon,
   Box,
   Button,
   Center,
-  Flex,
   Heading,
   Image,
-  Spacer,
   Table,
   TableContainer,
   Tbody,
@@ -33,7 +33,7 @@ export function TableCallType() {
       month: "long",
       year: "numeric",
     };
-    return new Date(dateString).toLocaleDateString("en-US", options);
+    return new Date(dateString).toLocaleDateString("id-ID", options);
   }
 
   let i = 1;
@@ -52,7 +52,7 @@ export function TableCallType() {
   return (
     <>
       <Heading marginBottom="8" marginTop="8">
-        Calls{" "}
+        Panggilan{" "}
         {type == 1 ? "Rumah Sakit" : type == 2 ? "Polisi" : "Pemadam Kebakaran"}
       </Heading>
 
@@ -62,10 +62,10 @@ export function TableCallType() {
             <Tr>
               <Th>No</Th>
               <Th></Th>
-              <Th>Name</Th>
-              <Th>Location</Th>
-              <Th>Type</Th>
-              <Th>Applied At</Th>
+              <Th>Nama</Th>
+              <Th>Lokasi</Th>
+              <Th>Jenis</Th>
+              <Th>Diajukan Pada</Th>
               <Th>Status</Th>
               <Th></Th>
             </Tr>
@@ -76,15 +76,14 @@ export function TableCallType() {
                 <Td>{i++}</Td>
                 <Td>
                   {item.user.map((user, index) => (
-                    <>
-                      <Image
-                        borderRadius="18"
-                        boxSize="60px"
-                        objectFit="cover"
-                        src={user.picture}
-                        alt={user.picture}
-                      />
-                    </>
+                    <Image
+                      key={index}
+                      borderRadius="18"
+                      boxSize="60px"
+                      objectFit="cover"
+                      src={process.env.NEXT_PUBLIC_BASE_URL + '/images/profile/' + item.picture}
+                      alt={user.picture}
+                    />
                   ))}
                 </Td>
                 <Td>
@@ -132,15 +131,15 @@ export function TableCallType() {
                       <VStack>
                         <Text as="b">
                           {item.status === 0
-                            ? "Pending"
+                            ? "Menunggu"
                             : item.status === 1
-                            ? "Cancelled"
-                            : "Accepted"}
+                            ? "Dibatalkan"
+                            : "Diterima"}
                         </Text>
                         {item.status === 0 ? (
                           ""
                         ) : item.status == 1 ? (
-                          <Text>Cancelled By User</Text>
+                          <Text>Dibatalkan Oleh Pengguna</Text>
                         ) : (
                           <Text>{formatDate(item.answered_at)}</Text>
                         )}
@@ -163,6 +162,12 @@ export function TableCallType() {
             ))}
           </Tbody>
         </Table>
+        {dataCall?.data.values.length == 0 ? (
+              <Alert status="info">
+                <AlertIcon />
+                Tidak ada data
+              </Alert>
+            ) : null }
       </TableContainer>
     </>
   );
