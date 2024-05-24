@@ -39,6 +39,7 @@ export function TableCall() {
     queryKey: ["calls"],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/calls");
+      console.log(process.env.NEXT_PUBLIC_BASE_URL.includes("localhost"))
       return dataResponse;
     },
   });

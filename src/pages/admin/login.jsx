@@ -51,7 +51,7 @@ function Login() {
       }
     } catch (error) {
       console.error("Error logging in:", error.message);
-      setError("Kesalahan teerjadi saat login");
+      setError("Kesalahan terjadi saat login");
     }
   };
 
