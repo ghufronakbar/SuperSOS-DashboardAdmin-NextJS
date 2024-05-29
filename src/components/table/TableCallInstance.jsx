@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Center,
+  HStack,
   Heading,
   Image,
   Table,
@@ -21,6 +22,8 @@ import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React from "react";
+import { formatDecimal } from "@/lib/formatDecimal";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 
 export function TableCallInstance() {
@@ -102,9 +105,14 @@ export function TableCallInstance() {
                   </Text>
                 </Td>
                 <Td>
-                  <Text>{item.latitude}</Text>
-                  <Text>{item.longitude}</Text>
-                </Td>
+                  <HStack>
+                    <Text>{formatDecimal(item.latitude)}, </Text>
+                    <Text>{formatDecimal(item.longitude)}</Text>{" "}
+                    <a href={item.url_google_map} target="_blank">
+                      <ExternalLinkIcon />
+                    </a>
+                  </HStack>
+                </Td>{" "}
                 <Td>
                   <Text as="b">
                     {item.type == 1

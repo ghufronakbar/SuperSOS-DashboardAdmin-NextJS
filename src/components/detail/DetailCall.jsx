@@ -12,10 +12,13 @@ import {
   Td,
   Image,
   VStack,
+  HStack,
 } from "@chakra-ui/react";
 import { axiosInstance } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { formatDecimal } from "@/lib/formatDecimal";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
 
 export function DetailCall() {
   const router = useRouter();
@@ -196,9 +199,15 @@ export function DetailCall() {
                         
                           <Tr>
                             <Th>Lokasi</Th>
-                            <Td isNumeric>
-                              {item.latitude}, {item.longitude}
-                            </Td>
+                            <Td>
+                  <HStack>
+                    <Text>{formatDecimal(item.latitude)}, </Text>
+                    <Text>{formatDecimal(item.longitude)}</Text>{" "}
+                    <a href={item.url_google_map} target="_blank">
+                      <ExternalLinkIcon />
+                    </a>
+                  </HStack>
+                </Td>{" "}
                           </Tr>
                           <Tr>
                             <Th>Tipe</Th>
