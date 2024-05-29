@@ -196,28 +196,30 @@ export function DetailCall() {
                     <TableContainer>
                       <Table>
                         <Tbody>
-                        
                           <Tr>
                             <Th>Lokasi</Th>
                             <Td>
-                  <HStack>
-                    <Text>{formatDecimal(item.latitude)}, </Text>
-                    <Text>{formatDecimal(item.longitude)}</Text>{" "}
-                    <a href={item.url_google_map} target="_blank">
-                      <ExternalLinkIcon />
-                    </a>
-                  </HStack>
-                </Td>{" "}
+                              <Center>
+                                <Text>{formatDecimal(item.latitude)}, </Text>
+                                <Text>
+                                  {formatDecimal(item.longitude)}
+                                </Text>{" "}
+                                <a href={item.url_google_map} target="_blank">
+                                  <ExternalLinkIcon />
+                                </a>
+                              </Center>
+                            </Td>{" "}
                           </Tr>
                           <Tr>
                             <Th>Tipe</Th>
-
                             <Td isNumeric>
-                              {item.type == 1
-                                ? "Rumah Sakit"
-                                : item.type == 2
-                                ? "Polisi"
-                                : "Pemadam Kebakaran"}
+                              <Center>
+                                {item.type == 1
+                                  ? "Rumah Sakit"
+                                  : item.type == 2
+                                  ? "Polisi"
+                                  : "Pemadam Kebakaran"}
+                              </Center>
                             </Td>
                           </Tr>
 
@@ -240,7 +242,6 @@ export function DetailCall() {
                                 px={4}
                               >
                                 <VStack>
-                                 
                                   <Text as="b">
                                     {item.status === 0
                                       ? "Pending"
@@ -255,22 +256,22 @@ export function DetailCall() {
                         </Tbody>
                       </Table>
                     </TableContainer>
-                    
                   </Box>
                   <Box
-                  m={4}
-                      mt={8}
-                      p={8}
-                      borderWidth="1px"
-                      borderRadius="lg"
-                      overflow="hidden"
-                      
-                    >
-                      <Table mb={4}><Th as='b'>Pesan</Th></Table>
-                      <Text px={4} style={{ overflowWrap: "break-word" }}>
-                        {item.message}
-                      </Text>
-                    </Box>
+                    m={4}
+                    mt={8}
+                    p={8}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    overflow="hidden"
+                  >
+                    <Table mb={4}>
+                      <Th as="b">Pesan</Th>
+                    </Table>
+                    <Text px={4} style={{ overflowWrap: "break-word" }}>
+                      {item.message}
+                    </Text>
+                  </Box>
                 </Box>
               </Flex>
             </Box>
