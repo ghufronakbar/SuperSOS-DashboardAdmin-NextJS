@@ -18,16 +18,21 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { Loading } from "../Loading";
 
 export function TableUser() {
   const router = useRouter();
   const toast = useToast();
+  const [isLoading, setIsloading] = useState(true)
+
 
   let i = 1;
   const { data: dataUser, refetch: refetchDataUser } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/users");
+      setIsloading(false)
       return dataResponse;
     },
   });
@@ -67,6 +72,9 @@ export function TableUser() {
   const handleDetail = (id_user) => {
     router.push(`/admin/user/${id_user}`);
   };
+
+  if(isLoading)return<Loading/>
+
 
   return (
     <>

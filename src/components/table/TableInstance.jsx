@@ -15,16 +15,21 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { Loading } from "../Loading";
 
 export function TableInstance() {
   const router = useRouter();
   const toast = useToast();
+  const [isLoading, setIsloading] = useState(true)
+
 
   let i = 1;
   const { data: dataInstance, refetch: refetchDataInstance } = useQuery({
     queryKey: ["instances"],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/instances");
+      setIsloading(false)
       return dataResponse;
     },
   });
@@ -62,6 +67,8 @@ export function TableInstance() {
       console.error("Error rejecting request:", error);
     }
   };
+
+  if(isLoading)return<Loading/>
 
   return (
     <>

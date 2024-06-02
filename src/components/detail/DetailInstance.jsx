@@ -16,6 +16,8 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { Loading } from "../Loading";
+import { formatDate } from "@/lib/formatDate";
 
 export function DetailInstance() {
   const router = useRouter();
@@ -46,17 +48,7 @@ export function DetailInstance() {
     router.push(`/admin/call/${id_call}`);
   };
 
-  function formatDate(dateString) {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
-  }
-
-  if (loading) return <div>Memuat...</div>;
+  if (loading) return <Loading/>
   if (error) return <div>Terjadi kesalahan saat mengambil data</div>;
 
   return (

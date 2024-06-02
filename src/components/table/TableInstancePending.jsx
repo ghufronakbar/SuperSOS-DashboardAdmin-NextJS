@@ -26,12 +26,14 @@ import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { Loading } from "../Loading";
 
 export function TableInstancePending() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [idInstances, setIdInstances] = useState(null);
   const router = useRouter();
   const toast = useToast();
+  const [isLoading, setIsloading] = useState(true)
 
   let i = 1;
   const { data: dataInstancePending, refetch: refetchDataInstancePending } =
@@ -39,6 +41,7 @@ export function TableInstancePending() {
       queryKey: ["instances/pending"],
       queryFn: async () => {
         const dataResponse = await axiosInstance.get("/instances/pending");
+        setIsloading(false)
         return dataResponse;
       },
     });
@@ -74,6 +77,8 @@ export function TableInstancePending() {
       console.error("Error rejecting request:", error);
     }
   };
+
+  if(isLoading)return<Loading/>
 
   return (
     <>

@@ -23,27 +23,23 @@ import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import { formatDecimal } from "@/lib/formatDecimal";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Loading } from "../Loading";
+import { useState } from "react";
+import { formatDate } from "@/lib/formatDate";
 
 export function TableCallType() {
   const router = useRouter();
   const toast = useToast();
   const { id: type } = router.query;
+  const [isLoading, setIsloading] = useState(true)
 
-  function formatDate(dateString) {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
-  }
 
   let i = 1;
   const { data: dataCall, refetch: refetchDataCall } = useQuery({
     queryKey: ["call/type", type],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get(`/call/type/${type}`);
+      setIsloading(false)
       return dataResponse;
     },
   });
@@ -51,6 +47,7 @@ export function TableCallType() {
   const handleDetail = (id_call) => {
     router.push(`/admin/call/${id_call}`);
   };
+  if(isLoading)return(<><Loading/></>)
 
   return (
     <>

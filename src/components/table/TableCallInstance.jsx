@@ -21,31 +21,26 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { formatDecimal } from "@/lib/formatDecimal";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
-
+import { Loading } from "../Loading";
+import { formatDate } from "@/lib/formatDate";
 
 export function TableCallInstance() {
   const router = useRouter();
   const toast = useToast();
   const { id: id_instances } = router.query;
-
-  function formatDate(dateString) {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
-  }
+  const [isLoading, setIsloading] = useState(true);
 
   let i = 1;
   const { data: dataCall, refetch: refetchDataCall } = useQuery({
     queryKey: ["call/instances", id_instances],
     queryFn: async () => {
-      const dataResponse = await axiosInstance.get(`/call/instances/${id_instances}`);
+      const dataResponse = await axiosInstance.get(
+        `/call/instances/${id_instances}`
+      );
+      setIsloading(false);
       return dataResponse;
     },
   });
@@ -62,10 +57,14 @@ export function TableCallInstance() {
     router.push(`/admin/call/${id_call}`);
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <>
       {dataInstance?.data.values.map((item) => (
-        <Heading marginBottom="8" marginTop="8">Panggilan {item.instances_name}</Heading>
+        <Heading marginBottom="8" marginTop="8">
+          Panggilan {item.instances_name}
+        </Heading>
       ))}
       <TableContainer>
         <Table>
@@ -100,7 +99,9 @@ export function TableCallInstance() {
                 <Td>
                   <Text as="b">
                     {item.user.map((user, index) => (
-                      <React.Fragment key={index}>{user.fullname}</React.Fragment>
+                      <React.Fragment key={index}>
+                        {user.fullname}
+                      </React.Fragment>
                     ))}
                   </Text>
                 </Td>
@@ -175,13 +176,13 @@ export function TableCallInstance() {
               </Tr>
             ))}
           </Tbody>
-        </Table>        
+        </Table>
         {dataCall?.data.values.length == 0 ? (
-              <Alert status="info">
-                <AlertIcon />
-                Tidak ada data
-              </Alert>
-            ) : null }
+          <Alert status="info">
+            <AlertIcon />
+            Tidak ada data
+          </Alert>
+        ) : null}
       </TableContainer>
     </>
   );

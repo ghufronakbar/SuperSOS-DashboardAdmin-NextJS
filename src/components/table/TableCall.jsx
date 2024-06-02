@@ -19,30 +19,25 @@ import {
 import { axiosInstance } from "../../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { formatDecimal } from "@/lib/formatDecimal";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Loading } from "../Loading";
+import { formatDate } from "@/lib/formatDate";
 
 export function TableCall() {
   const router = useRouter();
   const toast = useToast();
+  const [isLoading, setIsloading] = useState(true)
 
-  function formatDate(dateString) {
-    const options = {
-      weekday: "long",
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    };
-    return new Date(dateString).toLocaleDateString("id-ID", options);
-  }
+
 
   let i = 1;
   const { data: dataCall, refetch: refetchDataCall } = useQuery({
     queryKey: ["calls"],
     queryFn: async () => {
       const dataResponse = await axiosInstance.get("/calls");
-      console.log(process.env.NEXT_PUBLIC_BASE_URL.includes("localhost"))
+      setIsloading(false)
       return dataResponse;
     },
   });
@@ -50,6 +45,9 @@ export function TableCall() {
   const handleDetail = (id_call) => {
     router.push(`/admin/call/${id_call}`);
   };
+
+  if(isLoading)return(<><Loading/></>)
+
 
   return (
     <>
