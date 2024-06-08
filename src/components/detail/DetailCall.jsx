@@ -13,27 +13,32 @@ import {
   Image,
   VStack,
   HStack,
+  useClipboard,
+  useToast,
 } from "@chakra-ui/react";
 import { axiosInstance } from "../../lib/axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { CopyIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import { formatDecimal } from "@/lib/formatDecimal";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
 import { Loading } from "../Loading";
 import { formatDate } from "@/lib/formatDate";
 
 export function DetailCall() {
   const router = useRouter();
   const { id: id_call } = router.query;
-  const [item, setRequestData] = useState(null);
+  const [call, setCall] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [urlGoogleMap, setUrlGoogleMap] = useState("");
+  const { onCopy, value, setValue, hasCopied } = useClipboard("");
+  const toast = useToast();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const reqDataResponse = await axiosInstance.get(`/call/${id_call}`);
-        setRequestData(reqDataResponse.data.values[0]);
+        setCall(reqDataResponse.data.values[0]);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -47,12 +52,20 @@ export function DetailCall() {
     }
   }, [id_call]);
 
-  if (loading) return <Loading/>
-  if (error) return <div>Terjadi kesalahan saat mengambil data</div>;
+  const handleCopy = async (value) => {
+    await setValue(value);
+    await onCopy();
+    toast({
+      title: "URL Google Map dicopy",
+      status: "info",
+    });
+  };
+  if (loading) return <Loading />;
+  if (error) return <div>Error fetching data</div>;
 
   return (
     <>
-      {item && (
+      {call && (
         <Box>
           <Flex justifyContent="center">
             <Box flex={4} mt={4}>
@@ -68,7 +81,7 @@ export function DetailCall() {
                     m={4}
                   >
                     <Center>
-                      {item.user.map((user) => (
+                      {call.user.map((user) => (
                         <>
                           {" "}
                           <Image
@@ -84,10 +97,10 @@ export function DetailCall() {
                     <Box mt={5}>
                       <TableContainer>
                         <Table>
-                          {item.user.map((user) => (
+                          {call.user.map((user) => (
                             <Tbody>
                               <Tr>
-                                <Th>Nama</Th>
+                                <Th>Name</Th>
                                 <Td>{user.fullname}</Td>
                               </Tr>
                               <Tr>
@@ -95,18 +108,17 @@ export function DetailCall() {
                                 <Td>{user.email}</Td>
                               </Tr>
                               <Tr>
-                                <Th>Telepon</Th>
+                                <Th>Phone</Th>
                                 <Td>{user.phone}</Td>
                               </Tr>
                               <Tr>
-                                <Th>Alamat</Th>
+                                <Th>Address</Th>
                                 <Td>{user.address}</Td>
                               </Tr>
-
                               <Tr>
-                                <Th>Diajukan Pada</Th>
+                                <Th>Applied At</Th>
                                 <Td>
-                                  <Text>{formatDate(item.applied_at)}</Text>
+                                  <Text>{formatDate(call.applied_at)}</Text>
                                 </Td>
                               </Tr>
                             </Tbody>
@@ -126,8 +138,8 @@ export function DetailCall() {
                     <Box mt={4}>
                       <TableContainer>
                         <Table>
-                          {item.instances.length ? (
-                            item.instances.map((instance) => (
+                          {call.instances.length ? (
+                            call.instances.map((instance) => (
                               <Tbody key={instance.id}>
                                 <Tr>
                                   <Th>Nama</Th>
@@ -146,8 +158,8 @@ export function DetailCall() {
                                   <Td>{instance.address}</Td>
                                 </Tr>
                                 <Tr>
-                                  <Th>Dijawab Pada</Th>
-                                  <Td>{formatDate(item.answered_at)}</Td>
+                                  <Th>Panggilan Dijawab</Th>
+                                  <Td>{formatDate(call.answered_at)}</Td>
                                 </Tr>
                               </Tbody>
                             ))
@@ -164,7 +176,7 @@ export function DetailCall() {
                                     m={2}
                                     px={4}
                                   >
-                                    Belum Dijawab
+                                    Belum Terjawab
                                   </Box>
                                 </Td>
                               </Tr>
@@ -189,26 +201,32 @@ export function DetailCall() {
                       <Table>
                         <Tbody>
                           <Tr>
-                            <Th>Lokasi</Th>
+                            <Th>LOKASI</Th>
                             <Td>
                               <Center>
-                                <Text>{formatDecimal(item.latitude)}, </Text>
-                                <Text>
-                                  {formatDecimal(item.longitude)}
-                                </Text>{" "}
-                                <a href={item.url_google_map} target="_blank">
-                                  <ExternalLinkIcon />
-                                </a>
+                                <Text mx={2}>
+                                  {formatDecimal(call.latitude)},{" "}
+                                </Text>
+                                <Text>{formatDecimal(call.longitude)}</Text>
+                                <a href={call.url_google_map} target="_blank">
+                                  <ExternalLinkIcon mx={2} mb={1} />
+                                </a>{" "}
+                                <CopyIcon
+                                  mx={2}
+                                  onClick={() => {
+                                    handleCopy(call.url_google_map);
+                                  }}
+                                />
                               </Center>
                             </Td>{" "}
                           </Tr>
                           <Tr>
-                            <Th>Tipe</Th>
+                            <Th>Panggilan Untuk</Th>
                             <Td isNumeric>
                               <Center>
-                                {item.type == 1
+                                {call.type == 1
                                   ? "Rumah Sakit"
-                                  : item.type == 2
+                                  : call.type == 2
                                   ? "Polisi"
                                   : "Pemadam Kebakaran"}
                               </Center>
@@ -222,9 +240,9 @@ export function DetailCall() {
                                 as="button"
                                 borderRadius="md"
                                 bg={
-                                  item.status === 0
+                                  call.status === 0
                                     ? "#CBD5E0"
-                                    : item.status === 1
+                                    : call.status === 1
                                     ? "#E53E3E"
                                     : "#0063d1"
                                 }
@@ -235,11 +253,11 @@ export function DetailCall() {
                               >
                                 <VStack>
                                   <Text as="b">
-                                    {item.status === 0
-                                      ? "Pending"
-                                      : item.status === 1
-                                      ? "Dibatalkan oleh pengguna"
-                                      : "Diterima"}
+                                    {call.status === 0
+                                      ? "Menunggu"
+                                      : call.status === 1
+                                      ? "Dibatalkan oleh pemanggil"
+                                      : "Terjawab"}
                                   </Text>
                                 </VStack>
                               </Box>
@@ -261,7 +279,7 @@ export function DetailCall() {
                       <Th as="b">Pesan</Th>
                     </Table>
                     <Text px={4} style={{ overflowWrap: "break-word" }}>
-                      {item.message}
+                      {call.message}
                     </Text>
                   </Box>
                 </Box>
