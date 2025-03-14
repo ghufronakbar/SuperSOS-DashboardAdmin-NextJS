@@ -81,24 +81,22 @@ export function DetailCall() {
                     m={4}
                   >
                     <Center>
-                      {call.user.map((user) => (
-                        <>
-                          {" "}
-                          <Image
-                            borderRadius="18"
-                            boxSize="120px"
-                            objectFit="cover"
-                            src={user.picture}
-                            alt={user.picture}
-                          />
-                        </>
+                      {call.user.map((user, index) => (
+                        <Image
+                          key={index}
+                          borderRadius="18"
+                          boxSize="120px"
+                          objectFit="cover"
+                          src={user.picture}
+                          alt={user.picture}
+                        />
                       ))}
                     </Center>
                     <Box mt={5}>
                       <TableContainer>
                         <Table>
-                          {call.user.map((user) => (
-                            <Tbody>
+                          {call.user.map((user, index) => (
+                            <Tbody key={index}>
                               <Tr>
                                 <Th>Name</Th>
                                 <Td>{user.fullname}</Td>

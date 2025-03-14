@@ -61,8 +61,8 @@ export function TableCallInstance() {
 
   return (
     <>
-      {dataInstance?.data.values.map((item) => (
-        <Heading marginBottom="8" marginTop="8">
+      {dataInstance?.data.values.map((item, index) => (
+        <Heading marginBottom="8" marginTop="8" key={index}>
           Panggilan {item.instances_name}
         </Heading>
       ))}

@@ -1,7 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
 import { axiosInstance } from "@/lib/axios";
-import { Main } from "next/document";
 import {
   Button,
   Container,
@@ -19,7 +17,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const toast = useToast();
-  const router = useRouter()
+  const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -40,9 +38,9 @@ function Login() {
           status: "success",
         });
 
-        router.push("/admin/instance")
+        router.push("/admin/instance");
       } else {
-        console.log(response)
+        console.log(response);
         setError(message);
         toast({
           title: "Email dan password tidak cocok",
